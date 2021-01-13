@@ -1,0 +1,67 @@
+﻿@model DepartamentiCreateViewModel
+@{
+    ViewData["Title"] = "Modifikoni departamentin";
+}
+
+<div class="card card-custom gutter-b">
+    <div class="card-header flex-wrap py-3">
+        <div class="card-title">
+            <h3 class="card-label">
+                Modifikoni te dhenat e departamentit
+            </h3>
+        </div>
+    </div>
+    <div class="card-body">
+        <form class="form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" hidden />
+            <div class="form-group row">
+                <div class="col-lg-12">
+                    <label asp-for="KompaniaId">Kompania</label>
+                    <select asp-for="KompaniaId" asp-items="ViewBag.KompaniaId" class="form-control init-select2">
+                        <option value="">Zgjedh kompanine</option>
+                    </select>
+                    <span asp-validation-for="KompaniaId" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-4">
+                    <label class="required" asp-for="Emri"></label>
+                    <div class="input-group">
+                        <input asp-for="Emri" class="form-control" placeholder="Shenoni emrin e departamentit" />
+
+                    </div>
+                    <span asp-validation-for="Emri" class="text-danger"></span>
+                </div>
+                <div class="col-lg-4">
+                    <label class="required" asp-for="Shkurtesa"></label>
+                    <div class="input-group">
+                        <input asp-for="Shkurtesa" class="form-control" placeholder="Shenoni shkurtesen" />
+
+                    </div>
+                    <span asp-validation-for="Emri" class="text-danger"></span>
+                </div>
+                <div class="col-lg-4">
+                    <label class="required" asp-for="Status"></label>
+                    <div class="input-group">
+                        <input asp-for="Status" type="checkbox" class="form-control" />
+
+                    </div>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="submit" class="btn btn-primary mr-2">Ruaj</button>
+                        <button type="reset" class="btn btn-secondary">Anulo</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

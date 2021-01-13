@@ -1,0 +1,68 @@
+﻿@model KompaniaEditViewModel
+
+@{
+    ViewData["Title"] = "Modifiko kompanine";
+
+}
+
+<div class="card card-custom gutter-b">
+    <div class="card-header flex-wrap py-3">
+        <div class="card-title">
+            <h3 class="card-label">
+                Plotesoni te dhenat e kompanise
+            </h3>
+        </div>
+    </div>
+    <div class="card-body">
+        <form class="form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" hidden />
+            <div class="form-group row">
+                <div class="col-lg-6">
+                    <label asp-for="ParentId">Kompania prind</label>
+                    <select asp-for="ParentId" asp-items="ViewBag.ParentId" class="form-control init-select2">
+                        <option value="">Zgjedh kompanine</option>
+                    </select>
+                    <span asp-validation-for="ParentId" class="text-danger"></span>
+                </div>
+                <div class="col-lg-6">
+                    <label class="required" asp-for="KomunaId">Komuna</label>
+                    <select asp-for="KomunaId" asp-items="ViewBag.KomunaId" class="form-control init-select2">
+                        <option value="">Zgjedh komunen</option>
+                    </select>
+                    <span asp-validation-for="KomunaId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-6">
+                    <label class="required" asp-for="Kodi"></label>
+                    <div class="input-group">
+                        <input asp-for="Kodi" class="form-control" placeholder="Shenoni kodin" />
+                        <div class="input-group-append"><span class="input-group-text"><i class="fa fa-code"></i></span></div>
+                    </div>
+                    <span asp-validation-for="Kodi" class="text-danger"></span>
+                </div>
+                <div class="col-lg-6">
+                    <label class="required" asp-for="Emri"></label>
+                    <div class="input-group">
+                        <input asp-for="Emri" class="form-control" placeholder="Shenoni emrin e kompanise" />
+                        <div class="input-group-append"><span class="input-group-text"><i class="fa fa-building"></i></span></div>
+                    </div>
+                    <span asp-validation-for="Emri" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="submit" class="btn btn-primary mr-2">Ruaj</button>
+                        <button type="reset" class="btn btn-secondary">Anulo</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,265 @@
+﻿@model RaportModel
+@{ 
+    Layout = null;
+    int raportid = (int)ViewBag.RaportiId;
+    string title = "";
+    if(raportid == 1)
+    {
+        title = "Lista e pagave";
+    }
+    else if(raportid == 2)
+    {
+        title = "Lista e punëtorëve";
+    }
+} 
+
+<div class="card card-custom gutter-b">
+    <div class="card-header flex-wrap py-3">
+        <div class="card-title">
+            <h3>
+                @title
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            <a href="@Url.Action("Print","Raport", new { id = raportid})" target="_blank" class="btn btn-danger font-weight-bolder">
+                <i class="fa fa-file-pdf">
+
+                </i>Printo
+            </a>
+        </div>
+    </div>
+    <div class="card-body table-responsive">
+        <table class="table table-hover table-separate table-head-custom" id="data-table-nosort">
+            <thead>
+                @if (raportid == (int)SMP.Helpers.Raportet.PagatTabelare)
+                {
+                    <tr>
+                        <th>
+                            Punëtori
+                        </th>
+                        <th>
+                            Kompania
+                        </th>
+                        <th>
+                            Pozita
+                        </th>
+                        <th>
+                            Grada
+                        </th>
+                        <th>
+                            Banka
+                        </th>
+                        <th>
+                            Viti
+                        </th>
+                        <th>
+                            Muaji
+                        </th>
+                        <th>
+                            Bruto
+                        </th>
+                        <th>
+                            Bonuse bruto
+                        </th>
+                        <th>
+                            Kontributi
+                        </th>
+                        <th>
+                            Paga pa tatimuar
+                        </th>
+                        <th>
+                            Tatimi
+                        </th>
+                        <th>
+                            Paga neto
+                        </th>
+                        <th>
+                            Bonuse neto
+                        </th>
+                        <th>
+                            Paga finale
+                        </th>
+                    </tr>
+                }
+                else if (raportid == (int)SMP.Helpers.Raportet.Punetoret)
+                {
+                    <tr>
+                        <th>
+                            Punëtori
+                        </th>
+                        <th>
+                            Kompania
+                        </th>
+                        <th>
+                            Departamenti
+                        </th>
+                        <th>
+                            Pozita
+                        </th>
+                        <th>
+                            Grada
+                        </th>
+                        <th>
+                            Banka
+                        </th>
+                        <th>
+                            Numri personal
+                        </th>
+                        <th>
+                            Telefoni
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Datelindja
+                        </th>
+                        <th>
+                            Adresa
+                        </th>
+                        <th>
+                            Komuna
+                        </th>
+                    </tr>
+
+                }
+                else if(raportid == (int)SMP.Helpers.Raportet.Payslip)
+                {
+            <tr>
+                <th>
+                    Punëtori
+                </th>
+                <th>
+                    Kompania
+                </th>
+                <th>
+                    Pozita
+                </th>
+                <th>
+                    Grada
+                </th>
+                <th>
+                    Banka
+                </th>
+                <th>
+                    Viti
+                </th>
+                <th>
+                    Muaji
+                </th>
+                <th>
+                    Bruto
+                </th>
+                <th>
+                    Bonuse bruto
+                </th>
+                <th>
+                    Kontributi
+                </th>
+                <th>
+                    Paga pa tatimuar
+                </th>
+                <th>
+                    Tatimi
+                </th>
+                <th>
+                    Paga neto
+                </th>
+                <th>
+                    Bonuse neto
+                </th>
+                <th>
+                    Paga finale
+                </th>
+            </tr>
+                }
+            </thead>
+
+            <tbody class="datatable-body">
+                @if (raportid == 1)
+                {
+                    @foreach (var item in Model.allPagat.OrderByDescending(q => q.Id))
+                    {
+                        <tr>
+                            <td>@item.Punetori</td>
+                            <td>@item.Kompania</td>
+                            <td>@item.Pozita</td>
+                            <td>@item.Grada</td>
+                            <td>@item.Banka</td>
+                            <td>@item.Viti</td>
+                            <td>@item.Muaji</td>
+                            <td>@item.Bruto</td>
+                            <td>@item.Bonuse</td>
+                            <td>@item.Kontributi</td>
+                            <td>@item.PagaPaTatimuar</td>
+                            <td>@item.Tatimi</td>
+                            <td>@item.PagaNeto</td>
+                            <td>@item.BonuseNeto</td>
+                            <td>@item.PagaFinale</td>
+                        </tr>
+                    }
+                }
+                else if (raportid == 2)
+                {
+                    @foreach (var item in Model.allPunetoret.OrderByDescending(q => q.Id))
+                    {
+                        <tr>
+                            <td>@item.Emri</td>
+                            <td>@item.Kompania</td>
+                            <td>@item.Departamenti</td>
+                            <td>@item.Pozita</td>
+                            <td>@item.Grada</td>
+                            <td>@item.Banka</td>
+                            <td>@item.NumriPersonal</td>
+                            <td>@item.Telefoni</td>
+                            <td>@item.Email</td>
+                            <td>@item.Datelindja.ToString("dd/MM/yyyy")</td>
+                            <td>@item.Adresa</td>
+                            <td>@item.Komuna</td>
+                        </tr>
+                    }
+                }
+                else if (raportid == 3)
+                {
+                    @foreach (var item in Model.paySlip.OrderByDescending(q => q.Id))
+                    {
+                        <tr>
+                            <td>@item.Punetori</td>
+                            <td>@item.Kompania</td>
+                            <td>@item.Pozita</td>
+                            <td>@item.Grada</td>
+                            <td>@item.Banka</td>
+                            <td>@item.Viti</td>
+                            <td>@item.Muaji</td>
+                            <td>@item.Bruto</td>
+                            <td>@item.Bonuse</td>
+                            <td>@item.Kontributi</td>
+                            <td>@item.PagaPaTatimuar</td>
+                            <td>@item.Tatimi</td>
+                            <td>@item.PagaNeto</td>
+                            <td>@item.BonuseNeto</td>
+                            <td>@item.PagaFinale</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+
+
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    $('#data-table-nosort').DataTable({
+        "bSort": false,
+        "bLengthChange": false,
+        "searching": true,              // Searchbox
+        "dom": '<"top"f>rt<"bottom"lp><"clear">', // Positions table elements
+        "language": {
+            "search": "_INPUT_",            // Removes the 'Search' field label
+            "searchPlaceholder": "Search"   // Placeholder for the search box
+        },
+        "search": {
+            "addClass": 'form-control input-lg col-xs-12'
+        }
+    });
+</script>

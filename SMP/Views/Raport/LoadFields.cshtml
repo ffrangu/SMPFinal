@@ -1,0 +1,222 @@
+﻿@model RaportViewModel
+@{
+    Layout = null;
+    int? raportid = (int?)ViewBag.RaportiId;
+
+}
+
+@if (raportid == (int)SMP.Helpers.Raportet.PagatTabelare)
+{
+    <div class="col-md-12">
+        @if (!User.IsInRole("User"))
+        {
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label>Kompania:</label>
+                    <select asp-for="KompaniaId" asp-items="ViewBag.KompaniaId" class="form-control init-select2">
+                        <option value="">Zgjedh</option>
+                    </select>
+                    <span asp-validation-for="KompaniaId" class="text-danger"></span>
+                    <span class="form-text text-muted">Zgjedhni kompaninë</span>
+                </div>
+                <div class="col-md-6">
+                    <label>Punëtori:</label>
+                    <select asp-for="PunetoriId" asp-items="ViewBag.PunetoriId" class="form-control init-select2">
+                        <option value="">Zgjedh</option>
+                    </select>
+                    <span asp-validation-for="PunetoriId" class="text-danger"></span>
+                    <span class="form-text text-muted">Zgjedhni punëtorin</span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label>Grada:</label>
+                    <select asp-for="GradaId" asp-items="ViewBag.GradaId" class="form-control init-select2">
+                        <option value="">Zgjedh</option>
+                    </select>
+                    <span asp-validation-for="GradaId" class="text-danger"></span>
+                    <span class="form-text text-muted">Zgjedhni gradën</span>
+                </div>
+                <div class="col-md-3">
+                    <label>Banka:</label>
+                    <select asp-for="BankaId" asp-items="ViewBag.BankaId" class="form-control init-select2">
+                        <option value="">Zgjedh</option>
+                    </select>
+                    <span asp-validation-for="BankaId" class="text-danger"></span>
+                    <span class="form-text text-muted">Zgjedhni bankën</span>
+                </div>
+                <div class="col-md-3">
+                    <label>Muaji:</label>
+                    <select asp-for="Muaji" asp-items="ViewBag.Muaji" class="form-control init-select2">
+                        <option value="">Zgjedh</option>
+                    </select>
+                    <span asp-validation-for="Muaji" class="text-danger"></span>
+                    <span class="form-text text-muted">Zgjedhni muajin</span>
+                </div>
+                <div class="col-md-3">
+                    <label>Viti:</label>
+                    <select asp-for="Viti" asp-items="ViewBag.Viti" class="form-control init-select2">
+                        <option value="">Zgjedh</option>
+                    </select>
+                    <span asp-validation-for="Viti" class="text-danger"></span>
+                    <span class="form-text text-muted">Zgjedhni vitin</span>
+                </div>
+            </div>
+        }
+    </div>
+}
+else if (raportid == (int)SMP.Helpers.Raportet.Punetoret)
+{
+<div class="col-md-12">
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label>Kompania:</label>
+            <select asp-for="KompaniaId" asp-items="ViewBag.KompaniaId" class="form-control init-select2">
+                <option value="">Zgjedh</option>
+            </select>
+            <span asp-validation-for="KompaniaId" class="text-danger"></span>
+            <span class="form-text text-muted">Zgjedhni kompaninë</span>
+        </div>
+        <div class="col-md-6">
+            <label>Punëtori:</label>
+            <select asp-for="PunetoriId" asp-items="ViewBag.PunetoriId" class="form-control init-select2">
+                <option value="">Zgjedh</option>
+            </select>
+            <span asp-validation-for="PunetoriId" class="text-danger"></span>
+            <span class="form-text text-muted">Zgjedhni punëtorin</span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label>Grada:</label>
+            <select asp-for="GradaId" asp-items="ViewBag.GradaId" class="form-control init-select2">
+                <option value="">Zgjedh</option>
+            </select>
+            <span asp-validation-for="GradaId" class="text-danger"></span>
+            <span class="form-text text-muted">Zgjedhni gradën</span>
+        </div>
+        <div class="col-md-6">
+            <label>Banka:</label>
+            <select asp-for="BankaId" asp-items="ViewBag.BankaId" class="form-control init-select2">
+                <option value="">Zgjedh</option>
+            </select>
+            <span asp-validation-for="BankaId" class="text-danger"></span>
+            <span class="form-text text-muted">Zgjedhni bankën</span>
+        </div>
+    </div>
+</div>
+}
+else if(raportid == (int)SMP.Helpers.Raportet.Payslip)
+{
+<div class="col-md-12">
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label>Kompania:</label>
+            <select asp-for="KompaniaId" asp-items="ViewBag.KompaniaId" class="form-control init-select2">
+                <option value="">Zgjedh</option>
+            </select>
+            <span asp-validation-for="KompaniaId" class="text-danger"></span>
+            <span class="form-text text-muted">Zgjedhni kompaninë</span>
+        </div>
+        <div class="col-md-6">
+            <label>Punëtori:</label>
+            <select asp-for="PunetoriId" asp-items="ViewBag.PunetoriId" class="form-control init-select2">
+                <option value="">Zgjedh</option>
+            </select>
+            <span asp-validation-for="PunetoriId" class="text-danger"></span>
+            <span class="form-text text-muted">Zgjedhni punëtorin</span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-3">
+            <label>Grada:</label>
+            <select asp-for="GradaId" asp-items="ViewBag.GradaId" class="form-control init-select2">
+                <option value="">Zgjedh</option>
+            </select>
+            <span asp-validation-for="GradaId" class="text-danger"></span>
+            <span class="form-text text-muted">Zgjedhni gradën</span>
+        </div>
+        <div class="col-md-3">
+            <label>Banka:</label>
+            <select asp-for="BankaId" asp-items="ViewBag.BankaId" class="form-control init-select2">
+                <option value="">Zgjedh</option>
+            </select>
+            <span asp-validation-for="BankaId" class="text-danger"></span>
+            <span class="form-text text-muted">Zgjedhni bankën</span>
+        </div>
+        <div class="col-md-3">
+            <label>Muaji:</label>
+            <select asp-for="Muaji" asp-items="ViewBag.Muaji" class="form-control init-select2">
+                <option value="">Zgjedh</option>
+            </select>
+            <span asp-validation-for="Muaji" class="text-danger"></span>
+            <span class="form-text text-muted">Zgjedhni muajin</span>
+        </div>
+        <div class="col-md-3">
+            <label>Viti:</label>
+            <select asp-for="Viti" asp-items="ViewBag.Viti" class="form-control init-select2">
+                <option value="">Zgjedh</option>
+            </select>
+            <span asp-validation-for="Viti" class="text-danger"></span>
+            <span class="form-text text-muted">Zgjedhni vitin</span>
+        </div>
+    </div>
+</div>
+}
+else
+{
+
+}
+
+@if (raportid != null)
+{
+    <div class="col-md-12">
+        <div class="form-group row">
+            <div class="col-md-9"></div>
+            <div class="col-md-3 mt-7">
+                <button type="button" onclick="shtyp()" class="btn btn-success mr-2 btn-block">Kërko</button>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(".init-select2").select2();
+
+        $(function () {
+
+            $('#KompaniaId').change(function () {
+                fnKompaniaChange();
+
+            });
+
+        });
+
+        function fnKompaniaChange() {
+        var KompaniaId = $('#KompaniaId').val();
+
+        if (KompaniaId > 0) {
+                $.ajax({
+                    data: { KompaniaId: KompaniaId },
+                    url: '@Url.Action("LoadPunetoret", "Raport")',
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function (results) {
+
+                        $("#PunetoriId").html("");
+                        $("#PunetoriId").prepend(new Option("Zgjedh punëtorin", ""));
+                        $.each(results, function (i, result) {
+                            $("#PunetoriId").append(
+                       $('<option></option>').val(result.value).html(result.text)
+                       );
+                        });
+                    }
+                });
+            }
+            else {
+            $("#PunetoriId").html("");
+            $("#PunetoriId").prepend(new Option("Zgjedh", ""));
+            }
+
+        }
+</script>

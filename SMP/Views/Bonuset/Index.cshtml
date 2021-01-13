@@ -1,0 +1,92 @@
+﻿@using System.Globalization;
+@model List<BonusetListViewModel>
+
+@{
+    ViewData["Title"] = "Lista e pozitave";
+}
+
+
+<div class="card card-custom gutter-b">
+    <div class="card-header flex-wrap py-3">
+        <div class="card-title">
+            <h3>
+                Lista e bonuseve
+            </h3>
+
+        </div>
+
+    </div>
+
+    <div class="card-body table-responsive">
+        <table class="table table-hover table-separate table-head-custom" id="data-table-nosort">
+
+            <thead>
+                <tr>
+                    <th>
+                        Muaji
+                    </th>
+                    <th>
+                        Viti
+                    </th>
+                    <th>
+                        Punetori
+                    </th>
+                    <th>
+                        Vlera
+                    </th>
+                    <th>
+                        Pershkrimi
+                    </th>
+                    <th>
+                        Veprimet
+
+                    </th>
+
+                </tr>
+
+
+            </thead>
+
+            <tbody class="datatable-body">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[item.Muaji-1]
+                        </td>
+                        <td>
+                            @item.Viti
+                        </td>
+                        <td>
+                            @item.Punetori
+                        </td>
+                        <td>
+                                <span class="label label-inline label-light-success font-weight-bold">
+                                    @item.Vlera
+                                </span>
+
+                         </td>
+                        
+
+                        <td>
+                            @item.Pershkrimi
+                        </td>
+                        <td>
+                            <div class="flex sm:justify-center items-center">
+                                <a href="@Url.Action("Edit",new {id = item.Id })" class="btn btn-icon btn-outline-primary btn-xs" title="Edit">
+                                    <i class="flaticon2-edit"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+</div>

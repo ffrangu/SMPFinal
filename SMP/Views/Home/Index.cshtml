@@ -1,0 +1,634 @@
+﻿@inject SMP.Models.Home.IHomeRepository homeRepository;
+@using SMP.Data;
+@{
+    ViewData["Title"] = "Home Page";
+
+    int? KompaniaId = (int?)ViewBag.KompaniaId;
+    string UserId = (string)ViewBag.UserId;
+
+    int countPunetoret = 0;
+    int countKompanite = 0;
+    int countKontratat = 0;
+    int countPozitat = 0;
+    decimal? totalBruto;
+    decimal? totalBonuse;
+
+    List<Kompania> kompanite = new List<Kompania>();
+    List<Punetori> punetoret = new List<Punetori>();
+    List<Pozita> pozitat = new List<Pozita>();
+    List<Paga> pagat = new List<Paga>();
+    List<Bonuset> bonuset = new List<Bonuset>();
+
+    if (User.IsInRole("Administrator"))
+    {
+        countPunetoret = await homeRepository.CountPuntoret(null);
+
+        countKompanite = await homeRepository.CountKompanite();
+
+        countKontratat = await homeRepository.CountKontratat(null, null);
+
+        countPozitat = await homeRepository.CountPozitat(null);
+
+        totalBruto = await homeRepository.TotalBrutoPaga(null, null);
+
+        totalBonuse = await homeRepository.TotalBonuse(null, null);
+
+        kompanite = await homeRepository.ListaKompanive(null);
+
+        punetoret = await homeRepository.ListaPunetorve(null);
+
+        pozitat = await homeRepository.ListaPozitave(null);
+
+        pagat = await homeRepository.ListaPagave(null, null);
+
+        bonuset = await homeRepository.ListaBonuseve(null, null);
+    }
+
+    else if (User.IsInRole("HR"))
+    {
+        countPunetoret = await homeRepository.CountPuntoret(KompaniaId);
+
+        countKontratat = await homeRepository.CountKontratat(KompaniaId, null);
+
+        countPozitat = await homeRepository.CountPozitat(KompaniaId);
+
+        totalBruto = await homeRepository.TotalBrutoPaga(KompaniaId, null);
+
+        totalBonuse = await homeRepository.TotalBonuse(KompaniaId, null);
+
+        punetoret = await homeRepository.ListaPunetorve(KompaniaId);
+
+        pozitat = await homeRepository.ListaPozitave(KompaniaId);
+
+        pagat = await homeRepository.ListaPagave(KompaniaId, null);
+
+        bonuset = await homeRepository.ListaBonuseve(KompaniaId, null);
+    }
+
+    else
+    {
+        countKontratat = await homeRepository.CountKontratat(null, UserId);
+
+        totalBruto = await homeRepository.TotalBrutoPaga(null, UserId);
+
+        totalBonuse = await homeRepository.TotalBonuse(null, UserId);
+
+        pagat = await homeRepository.ListaPagave(null, UserId);
+
+        bonuset = await homeRepository.ListaBonuseve(null, UserId);
+
+    }
+}
+
+@if (User.IsInRole("Administrator"))
+{
+    <div class="row">
+        <div class="col-md-3">
+            <a asp-action="Index" asp-controller="Punetori" target="_blank" class="card card-custom bg-primary gutter-b">
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-white svg-icon-3x ml-n1">
+                        <i class="fa fa-2x text-white fa-users"></i>
+                    </span>
+                    <div class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5">Numri i punëtorëve</div>
+                    <div class="font-weight-bold text-inverse-primary font-size-sm">@countPunetoret</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a asp-action="Index" asp-controller="Kompania" target="_blank" class="card card-custom bg-warning gutter-b">
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-white svg-icon-3x ml-n1">
+                        <i class="fa fa-2x text-white fa-building"></i>
+                    </span>
+                    <div class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5">Numri i kompanive</div>
+                    <div class="font-weight-bold text-inverse-primary font-size-sm">@countKompanite</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a asp-action="Index" asp-controller="Punetori" target="_blank" class="card card-custom bg-info gutter-b">
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-white svg-icon-3x ml-n1">
+                        <i class="fa fa-2x text-white fa-file-contract"></i>
+                    </span>
+                    <div class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5">Numri i kontratave</div>
+                    <div class="font-weight-bold text-inverse-primary font-size-sm">@countKontratat</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a asp-action="Index" asp-controller="Pozita" target="_blank" class="card card-custom bg-success gutter-b">
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-white svg-icon-3x ml-n1">
+                        <i class="fa fa-2x text-white fa-briefcase"></i>
+                    </span>
+                    <div class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5">Numri i pozitave</div>
+                    <div class="font-weight-bold text-inverse-primary font-size-sm">@countPozitat</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <a asp-action="Index" asp-controller="Paga" target="_blank" class="card card-custom bg-success gutter-b">
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-white svg-icon-3x ml-n1">
+                        <i class="fa fa-2x text-white fa-money-check"></i>
+                    </span>
+                    <div class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5">Total bruto</div>
+                    <div class="font-weight-bold text-inverse-primary font-size-sm">@totalBruto</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <a asp-action="Index" asp-controller="Paga" target="_blank" class="card card-custom bg-success gutter-b">
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-white svg-icon-3x ml-n1">
+                        <i class="fa fa-2x text-white fa-money-bill"></i>
+                    </span>
+                    <div class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5">Total bonuse</div>
+                    <div class="font-weight-bold text-inverse-primary font-size-sm">@totalBonuse</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-custom gutter-b">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h3 class="card-label">Punëtorët</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>Emri</th>
+                                <th>Mbiemri</th>
+                                <th>Kompania</th>
+                                <th>Pozita</th>
+                                <th>Grada</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in punetoret.Take(10))
+                            {
+                                <tr>
+                                    <td>@item.Emri</td>
+                                    <td>@item.Mbiemri</td>
+                                    <td>@item.Kompania.Emri</td>
+                                    <td>@item.Pozita.Emri</td>
+                                    <td>@item.Grada.Emri</td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+            <div class="card card-custom gutter-b">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h3 class="card-label">Pozitat</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>Pozita</th>
+                                <th>Kompania</th>
+                                <th>Departamenti</th>
+                                <th>Statusi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in pozitat.Take(10))
+                            {
+                                <tr>
+                                    <td>@item.Emri</td>
+                                    <td>@item.Kompania.Emri</td>
+                                    <td>@item.Departamenti.Emri</td>
+                                    <td>@item.Status</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-custom gutter-b">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h3 class="card-label">10 pagat e fundit</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>Emri</th>
+                                <th>Mbiemri</th>
+                                <th>Kompania</th>
+                                <th>Bruto</th>
+                                <th>Bonuse</th>
+                                <th>Paga neto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in pagat)
+                            {
+                                <tr>
+                                    <td>@item.Punetori.Emri</td>
+                                    <td>@item.Punetori.Mbiemri</td>
+                                    <td>@item.Punetori.Kompania.Emri</td>
+                                    <td>@item.Bruto</td>
+                                    <td>@item.Bonuse</td>
+                                    <td>@item.PagaFinale</td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+            <div class="card card-custom gutter-b">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h3 class="card-label">10 bonuset e fundit</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>Emri</th>
+                                <th>Mbiemri</th>
+                                <th>Kompania</th>
+                                <th>Vlera</th>
+                                <th>Pershkrimi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in bonuset)
+                            {
+                                <tr>
+                                    <td>@item.Punetori.Emri</td>
+                                    <td>@item.Punetori.Mbiemri</td>
+                                    <td>@item.Punetori.Kompania.Emri</td>
+                                    <td>@item.Vlera</td>
+                                    <td>@item.Pershkrimi</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+else if (User.IsInRole("HR"))
+{
+    <div class="row">
+        <div class="col-md-4">
+            <a asp-action="Index" asp-controller="Punetori" target="_blank" class="card card-custom bg-primary gutter-b">
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-white svg-icon-3x ml-n1">
+                        <i class="fa fa-2x text-white fa-users"></i>
+                    </span>
+                    <div class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5">Numri i punëtorëve</div>
+                    <div class="font-weight-bold text-inverse-primary font-size-sm">@countPunetoret</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a asp-action="Index" asp-controller="Punetori" target="_blank" class="card card-custom bg-info gutter-b">
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-white svg-icon-3x ml-n1">
+                        <i class="fa fa-2x text-white fa-file-contract"></i>
+                    </span>
+                    <div class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5">Numri i kontratave</div>
+                    <div class="font-weight-bold text-inverse-primary font-size-sm">@countKontratat</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a asp-action="Index" asp-controller="Pozita" target="_blank" class="card card-custom bg-success gutter-b">
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-white svg-icon-3x ml-n1">
+                        <i class="fa fa-2x text-white fa-briefcase"></i>
+                    </span>
+                    <div class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5">Numri i pozitave</div>
+                    <div class="font-weight-bold text-inverse-primary font-size-sm">@countPozitat</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <a asp-action="Index" asp-controller="Paga" target="_blank" class="card card-custom bg-success gutter-b">
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-white svg-icon-3x ml-n1">
+                        <i class="fa fa-2x text-white fa-money-check"></i>
+                    </span>
+                    <div class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5">Total bruto</div>
+                    <div class="font-weight-bold text-inverse-primary font-size-sm">@totalBruto</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <a asp-action="Index" asp-controller="Paga" target="_blank" class="card card-custom bg-success gutter-b">
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-white svg-icon-3x ml-n1">
+                        <i class="fa fa-2x text-white fa-money-bill"></i>
+                    </span>
+                    <div class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5">Total bonuse</div>
+                    <div class="font-weight-bold text-inverse-primary font-size-sm">@totalBonuse</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-custom gutter-b">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h3 class="card-label">Punëtorët</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>Emri</th>
+                                <th>Mbiemri</th>
+                                <th>Kompania</th>
+                                <th>Pozita</th>
+                                <th>Grada</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in punetoret.Take(10))
+                            {
+                                <tr>
+                                    <td>@item.Emri</td>
+                                    <td>@item.Mbiemri</td>
+                                    <td>@item.Kompania.Emri</td>
+                                    <td>@item.Pozita.Emri</td>
+                                    <td>@item.Grada.Emri</td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+            <div class="card card-custom gutter-b">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h3 class="card-label">Pozitat</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>Pozita</th>
+                                <th>Kompania</th>
+                                <th>Departamenti</th>
+                                <th>Statusi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in pozitat.Take(10))
+                            {
+                                <tr>
+                                    <td>@item.Emri</td>
+                                    <td>@item.Kompania.Emri</td>
+                                    <td>@item.Departamenti.Emri</td>
+                                    <td>@item.Status</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-custom gutter-b">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h3 class="card-label">10 pagat e fundit</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>Emri</th>
+                                <th>Mbiemri</th>
+                                <th>Kompania</th>
+                                <th>Bruto</th>
+                                <th>Bonuse</th>
+                                <th>Paga neto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in pagat)
+                            {
+                                <tr>
+                                    <td>@item.Punetori.Emri</td>
+                                    <td>@item.Punetori.Mbiemri</td>
+                                    <td>@item.Punetori.Kompania.Emri</td>
+                                    <td>@item.Bruto</td>
+                                    <td>@item.Bonuse</td>
+                                    <td>@item.PagaFinale</td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+            <div class="card card-custom gutter-b">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h3 class="card-label">10 bonuset e fundit</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>Emri</th>
+                                <th>Mbiemri</th>
+                                <th>Kompania</th>
+                                <th>Vlera</th>
+                                <th>Pershkrimi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in bonuset)
+                            {
+                                <tr>
+                                    <td>@item.Punetori.Emri</td>
+                                    <td>@item.Punetori.Mbiemri</td>
+                                    <td>@item.Punetori.Kompania.Emri</td>
+                                    <td>@item.Vlera</td>
+                                    <td>@item.Pershkrimi</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <a href="javascript:;" target="_blank" class="card card-custom bg-info gutter-b">
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-white svg-icon-3x ml-n1">
+                        <i class="fa fa-2x text-white fa-file-contract"></i>
+                    </span>
+                    <div class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5">Numri i kontratave</div>
+                    <div class="font-weight-bold text-inverse-primary font-size-sm">@countKontratat</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a asp-action="Index" asp-controller="Paga" target="_blank" class="card card-custom bg-success gutter-b">
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-white svg-icon-3x ml-n1">
+                        <i class="fa fa-2x text-white fa-money-check"></i>
+                    </span>
+                    <div class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5">Total bruto</div>
+                    <div class="font-weight-bold text-inverse-primary font-size-sm">@totalBruto</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a asp-action="Index" asp-controller="Paga" target="_blank" class="card card-custom bg-primary gutter-b">
+                <div class="card-body">
+                    <span class="svg-icon svg-icon-white svg-icon-3x ml-n1">
+                        <i class="fa fa-2x text-white fa-money-bill"></i>
+                    </span>
+                    <div class="text-inverse-primary font-weight-bolder font-size-h5 mb-2 mt-5">Total bonuse</div>
+                    <div class="font-weight-bold text-inverse-primary font-size-sm">@totalBonuse</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-custom gutter-b">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h3 class="card-label">10 pagat e fundit</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>Emri</th>
+                                <th>Mbiemri</th>
+                                <th>Kompania</th>
+                                <th>Bruto</th>
+                                <th>Bonuse</th>
+                                <th>Paga neto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in pagat)
+                            {
+                                <tr>
+                                    <td>@item.Punetori.Emri</td>
+                                    <td>@item.Punetori.Mbiemri</td>
+                                    <td>@item.Punetori.Kompania.Emri</td>
+                                    <td>@item.Bruto</td>
+                                    <td>@item.Bonuse</td>
+                                    <td>@item.PagaFinale</td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+            <div class="card card-custom gutter-b">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h3 class="card-label">10 bonuset e fundit</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>Emri</th>
+                                <th>Mbiemri</th>
+                                <th>Kompania</th>
+                                <th>Vlera</th>
+                                <th>Pershkrimi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in bonuset)
+                            {
+                                <tr>
+                                    <td>@item.Punetori.Emri</td>
+                                    <td>@item.Punetori.Mbiemri</td>
+                                    <td>@item.Punetori.Kompania.Emri</td>
+                                    <td>@item.Vlera</td>
+                                    <td>@item.Pershkrimi</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}

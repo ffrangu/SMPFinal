@@ -1,0 +1,142 @@
+﻿@model List<PunetoriListViewModel>
+
+@{
+    ViewData["Title"] = "Lista e punëtoreve";
+}
+
+
+<div class="card card-custom gutter-b">
+    <div class="card-header flex-wrap py-3">
+        <div class="card-title">
+            <h3>
+                Lista e punëtoreve
+            </h3>
+
+        </div>
+
+    </div>
+
+    <div class="card-body table-responsive">
+        <table class="table table-hover table-separate table-head-custom" id="data-table-nosort">
+
+            <thead>
+                <tr>
+                    <th>
+                        Emri
+                    </th>
+                    <th>
+                        Mbiemri
+                    </th>
+                    <th>
+                        Numri personal
+                    </th>
+                    <th>
+                        Datelindja
+                    </th>
+                    <th>
+                        Adresa
+                    </th>
+                    <th>
+                        Komuna
+                    </th>
+                    <th>
+                        Kompania
+                    </th>
+                    <th>
+                        Departamenti
+                    </th>
+                    <th>
+                        Pozita
+                    </th>
+                    <th>
+                        Banka
+                    </th>
+                    <th>
+                        Xhirollogaria
+                    </th>
+                    <th>
+                        Grada
+                    </th>
+                    <th>
+                        
+
+                    </th>
+
+                </tr>
+
+
+            </thead>
+
+            <tbody class="datatable-body">
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @item.Emri
+                    </td>
+                    <td>
+                        @item.Mbiemri
+                    </td>
+                    <td>
+                        @item.NumriPersonal
+                    </td>
+                    <td>
+                        
+                            @item.Datelindja
+                        
+
+                    </td>
+
+
+                    <td>
+                        @item.Adresa
+                    </td>
+                    <td>
+                        @item.Komuna
+                    </td>
+
+                    <td>
+                        @item.Kompania
+                    </td>
+                    <td>
+                        @item.Departamenti
+                    </td>
+
+                    <td>
+                        @item.Pozita
+                    </td>
+                    <td>
+                        @item.Banka
+                    </td>
+                    <td>
+                        <span class="label label-inline label-light-success font-weight-bold">
+                            @item.Xhirollogaria
+                            </span>
+                    </td>
+                    <td>
+                        <span class="label label-inline label-light-danger font-weight-bold">
+                            @item.Grada
+                            </span>
+                    </td>
+                    <td>
+                        <div class="flex sm:justify-center items-center">
+                            <a href="@Url.Action("Details",new {id = item.Id })" class="btn btn-icon btn-outline-primary btn-xs" title="Search">
+                                <i class="flaticon2-search"></i>
+                                <a href="@Url.Action("Edit",new {id = item.Id })" class="btn btn-icon btn-outline-primary btn-xs" title="Edit">
+                                    <i class="flaticon2-edit"></i>
+                                </a>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                }
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+</div>

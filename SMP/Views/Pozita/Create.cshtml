@@ -1,0 +1,147 @@
+﻿@model PozitaCreateViewModel
+@{
+    ViewData["Title"] = "Regjistro pozite të re";
+}
+
+<div class="card card-custom gutter-b">
+    <div class="card-header flex-wrap py-3">
+        <div class="card-title">
+            <h3 class="card-label">
+                Plotesoni te dhenat e pozites
+            </h3>
+        </div>
+    </div>
+    <div class="card-body">
+        <form class="form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row">
+                <div class="col-lg-6">
+                    <label asp-for="KompaniaId">Kompania</label>
+                    <select asp-for="KompaniaId" asp-items="ViewBag.Kompania" class="form-control init-select2">
+                        <option value="">Zgjedh kompanine</option>
+                    </select>
+                    <span asp-validation-for="KompaniaId" class="text-danger"></span>
+                </div>
+                <div class="col-lg-6">
+                    <label class="required" asp-for="DepartamentiId">Departamenti</label>
+                    <select asp-for="DepartamentiId" asp-items="ViewBag.Departamenti" class="form-control init-select2">
+                        <option value="">Zgjedh departamentin</option>
+                    </select>
+                    <span asp-validation-for="DepartamentiId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-6">
+                    <label class="required" asp-for="Emri"></label>
+                    <div class="input-group">
+                        <input asp-for="Emri" class="form-control" placeholder="Shenoni emrin e pozites" />
+                        
+                    </div>
+                    <span asp-validation-for="Emri" class="text-danger"></span>
+                </div>
+                <div class="col-lg-6">
+                    <label class="required" asp-for="Status"></label>
+                    <div class="input-group">
+                        <input asp-for="Status" type="checkbox" class="form-control"/>
+                        
+                    </div>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="submit" class="btn btn-primary mr-2">Ruaj</button>
+                        <button type="reset" class="btn btn-secondary">Anulo</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+    $(function () {
+
+        $('#KompaniaId').change(function () {
+            fnKompaniaChange();
+
+        });
+        //$('#DepartamentiId').change(function () {
+        //    fnDepartamentiChange();
+
+        //});
+
+
+
+
+    });
+
+
+    function fnKompaniaChange() {
+        var KompaniaId = $('#KompaniaId').val();
+
+        if (KompaniaId > 0) {
+                $.ajax({
+                    data: { KompaniaId: KompaniaId },
+                    url: '@Url.Action("GetDepartments", "Departamenti")',
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function (results) {
+
+                        $("#DepartamentiId").html("");
+                        $("#DepartamentiId").prepend(new Option("Zgjedh", ""));
+                        $.each(results, function (i, result) {
+                            $("#DepartamentiId").append(
+                       $('<option></option>').val(result.value).html(result.text)
+                       );
+                        });
+                        $("#DepartamentiId").trigger("change");
+                    }
+                });
+            }
+            else {
+                $("#DepartamentiId").html("");
+                $("#DepartamentiId").prepend(new Option("Zgjedh", ""));
+                $("#DepartamentiId").trigger("change");
+            }
+
+        }
+
+        function fnDepartamentiChange() {
+            var DepartamentiId = $('#DepartamentiId').val();
+            var KompaniaId = $('#KompaniaId').val();
+
+
+            if (DepartamentiId > 0) {
+                $.ajax({
+                    data: { DepartamentiId: DepartamentiId,KompaniaId:KompaniaId },
+                    url: '@Url.Action("GetPozita", "Pozita")',
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function (results) {
+
+                        $("#PozitaId").html("");
+                        $("#PozitaId").prepend(new Option("Zgjedh", ""));
+                        $.each(results, function (i, result) {
+                            $("#PozitaId").append(
+                       $('<option></option>').val(result.value).html(result.text)
+                       );
+                        });
+                        $("#PozitaId").trigger("change");
+                    }
+                });
+            }
+            else {
+                $("#PozitaId").html("");
+                $("#PozitaId").prepend(new Option("Zgjedh", ""));
+                $("#PozitaId").trigger("change");
+            }
+
+            }
+
+    </script>
+}

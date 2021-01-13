@@ -1,0 +1,106 @@
+﻿@model List<PozitaListViewModel>
+
+@{
+    ViewData["Title"] = "Lista e pozitave";
+}
+
+
+<div class="card card-custom gutter-b">
+    <div class="card-header flex-wrap py-3">
+        <div class="card-title">
+            <h3>
+                Lista e pozitave
+            </h3>
+        </div>
+    </div>
+
+    <div class="card-body table-responsive">
+        <table class="table table-hover table-separate table-head-custom" id="data-table-nosort">
+
+            <thead>
+                <tr>
+                    <th>
+                        Kompania
+                    </th>
+                    <th>
+                        Departamenti
+                    </th>
+                    <th>
+                        Emri i pozitës
+                    </th>
+                    <th>
+                        Statusi
+                    </th>
+                    <th>
+                        Data e krijimit
+                    </th>
+                    <th>
+                        Krijuar nga
+                    </th>
+                    <th>
+                        Veprimet
+
+                    </th>
+
+                </tr>
+
+
+            </thead>
+
+            <tbody class="datatable-body">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.Kompania
+                        </td>
+                        <td>
+                            @item.Departamenti
+                        </td>
+                        <td>
+                            @item.Emri
+                        </td>
+                        @if(item.Status)
+                        {
+                    <td>
+                        <span class="label label-inline label-light-success font-weight-bold">
+                            Aktiv
+                        </span>
+
+                    </td>
+                        }
+                        else
+                        {
+                    <td>
+                        <span class="label label-inline label-light-danger font-weight-bold">
+                            Jo-aktiv
+                        </span>
+
+                    </td>
+                        }
+
+                        <td>
+                            @item.Created
+                        </td>
+                        <td>
+                            @item.CreatedBy
+                        </td>
+                        <td>
+                            <div class="flex sm:justify-center items-center">
+                                <a href="@Url.Action("Edit",new {id = item.Id })" class="btn btn-icon btn-outline-primary btn-xs" title="Edit">
+                                    <i class="flaticon2-edit"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+</div>

@@ -1,0 +1,339 @@
+﻿@model PunetoriCreateViewModel
+@{
+    ViewData["Title"] = "Regjistro punëtorin";
+
+    bool showError = (bool)ViewBag.AddError;
+}
+
+
+
+<!--begin::Card-->
+<div class="card card-custom">
+    <!--begin::Card header-->
+    <div class="card-header card-header-tabs-line nav-tabs-line-3x">
+        <!--begin::Toolbar-->
+        <div class="card-toolbar">
+            <ul class="nav nav-tabs nav-bold nav-tabs-line nav-tabs-line-3x">
+                <li class="nav-item mr-3">
+                    <a class="nav-link active" data-toggle="tab" href="#kt_user_edit_tab_2">
+                        <span class="nav-icon">
+                            <span class="svg-icon">
+                                <!--begin::Svg Icon | path:assets/media/svg/icons/General/User.svg-->
+                                <span class="svg-icon svg-icon-primary svg-icon-2x">
+                                    <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\keen\theme\demo7\dist/../src/media/svg/icons\Communication\Dial-numbers.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24" />
+                                            <rect fill="#000000" opacity="0.3" x="4" y="4" width="4" height="4" rx="2" />
+                                            <rect fill="#000000" x="4" y="10" width="4" height="4" rx="2" />
+                                            <rect fill="#000000" x="10" y="4" width="4" height="4" rx="2" />
+                                            <rect fill="#000000" x="10" y="10" width="4" height="4" rx="2" />
+                                            <rect fill="#000000" x="16" y="4" width="4" height="4" rx="2" />
+                                            <rect fill="#000000" x="16" y="10" width="4" height="4" rx="2" />
+                                            <rect fill="#000000" x="4" y="16" width="4" height="4" rx="2" />
+                                            <rect fill="#000000" x="10" y="16" width="4" height="4" rx="2" />
+                                            <rect fill="#000000" x="16" y="16" width="4" height="4" rx="2" />
+                                        </g>
+                                    </svg><!--end::Svg Icon-->
+                                </span>
+                                <!--end::Svg Icon-->
+                            </span>
+                        </span>
+                        <span class="nav-text font-size-lg">Punëtori</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--end::Toolbar-->
+    </div>
+    <!--end::Card header-->
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        if (showError)
+        {
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+        }
+
+        <!--begin::Card body-->
+        <div class="card-body">
+            <!--begin::Tab-->
+            <div class="tab-pane px-7" id="kt_user_edit_tab_2">
+                <div class="row">
+                    <div class="col-xl-2"></div>
+                    <div class="col-xl-7 my-2">
+
+                        <div class="row">
+                            <label class="col-form-label col-3 text-lg-right text-left"></label>
+                            <div class="col-9">
+                                <h5 class="font-weight-bold mb-6">Informatat e punëtorit</h5>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-3 text-lg-right text-left required">Emri</label>
+                            <div class="col-9">
+                                @Html.TextBoxFor(m => m.Emri, new { @class = "form-control form-control-lg form-control-solid", @placeholder = "Emri" })
+                                @Html.ValidationMessageFor(m => m.Emri, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-3 text-lg-right text-left required">Mbiemri</label>
+                            <div class="col-9">
+                                @Html.TextBoxFor(m => m.Mbiemri, new { @class = "form-control form-control-lg form-control-solid", @placeholder = "Mbiemri" })
+                                @Html.ValidationMessageFor(m => m.Mbiemri, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-3 text-lg-right text-left required">Numri personal</label>
+                            <div class="col-9">
+                                @Html.TextBoxFor(m => m.NumriPersonal, new { @class = "form-control form-control-lg form-control-solid", @type = "number", @step = "any", @placeholder = "Numri personal" })
+                                @Html.ValidationMessageFor(m => m.NumriPersonal, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-3 text-lg-right text-left required">Datelindja</label>
+                            <div class="col-9">
+                                @Html.TextBoxFor(m => m.Datelindja, new { @class = "form-control form-control-lg form-control-solid", @type = "date", @placeholder = "Datelindja" })
+                                @Html.ValidationMessageFor(m => m.Datelindja, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-3 text-lg-right text-left required">Komuna</label>
+                            <div class="col-9">
+                                @Html.DropDownListFor(m => m.KomunaId, ViewBag.KomunaId as SelectList, "Zgjedh", htmlAttributes: new { @class = "form-control form-control-lg form-control-solid" })
+                                @Html.ValidationMessageFor(m => m.KomunaId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-3 text-lg-right text-left">Adresa</label>
+                            <div class="col-9">
+                                @Html.TextBoxFor(m => m.Adresa, new { @class = "form-control form-control-lg form-control-solid", @placeholder = "Adresa" })
+                                @Html.ValidationMessageFor(m => m.Adresa, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-3 text-lg-right text-left required">Email adresa</label>
+                            <div class="col-9">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-lg form-control-solid", @placeholder = "Email adresa" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-3 text-lg-right text-left">Telefoni</label>
+                            <div class="col-9">
+                                @Html.TextBoxFor(m => m.Telefoni, new { @class = "form-control form-control-lg form-control-solid", @placeholder = "Telefoni" })
+                                @Html.ValidationMessageFor(m => m.Telefoni, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col-form-label col-3 text-lg-right text-left"></label>
+                            <div class="col-9">
+                                <h5 class="font-weight-bold mt-10 mb-6">Informatat rreth punësimit</h5>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-3 text-lg-right text-left required">Kompania</label>
+                            <div class="col-9">
+                                @Html.DropDownListFor(m => m.KompaniaId, ViewBag.Kompania as SelectList, "Zgjedh", htmlAttributes: new { @class = "form-control form-control-lg form-control-solid" })
+                                @Html.ValidationMessageFor(m => m.KompaniaId, "", new { @class = "text-danger" })
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-3 text-lg-right text-left required">Departamenti</label>
+                            <div class="col-9">
+                                @Html.DropDownListFor(m => m.DepartamentiId, ViewBag.Departamenti as SelectList, "Zgjedh", htmlAttributes: new { @class = "form-control form-control-lg form-control-solid" })
+                                @Html.ValidationMessageFor(m => m.DepartamentiId, "", new { @class = "text-danger" })
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-3 text-lg-right text-left required">Pozita</label>
+                            <div class="col-9">
+                                @Html.DropDownListFor(m => m.PozitaId, ViewBag.Pozita as SelectList, "Zgjedh", htmlAttributes: new { @class = "form-control form-control-lg form-control-solid" })
+                                @Html.ValidationMessageFor(m => m.PozitaId, "", new { @class = "text-danger" })
+                            </div>
+
+
+                        </div>
+
+                        <div class="row">
+                            <label class="col-form-label col-3 text-lg-right text-left"></label>
+                            <div class="col-9">
+                                <h5 class="font-weight-bold mt-10 mb-6">Informatat rreth bankës</h5>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-3 text-lg-right text-left required">Banka</label>
+                            <div class="col-9">
+                                @Html.DropDownListFor(m => m.BankaId, ViewBag.Banka as SelectList, "Zgjedh", htmlAttributes: new { @class = "form-control form-control-lg form-control-solid" })
+                                @Html.ValidationMessageFor(m => m.BankaId, "", new { @class = "text-danger" })
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-3 text-lg-right text-left required">Xhirollogaria</label>
+                            <div class="col-9">
+                                @Html.TextBoxFor(m => m.Xhirollogaria, new { @class = "form-control form-control-lg form-control-solid", @placeholder = "Xhirollogaria" })
+                                @Html.ValidationMessageFor(m => m.NumriPersonal, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col-form-label col-3 text-lg-right text-left"></label>
+                            <div class="col-9">
+                                <h5 class="font-weight-bold mt-10 mb-6">Grada e punëtorit</h5>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-3 text-lg-right text-left required">Grada</label>
+                            <div class="col-9">
+                                @Html.DropDownListFor(m => m.GradaId, ViewBag.Grada as SelectList, "Zgjedh", htmlAttributes: new { @class = "form-control form-control-lg form-control-solid" })
+                                @Html.ValidationMessageFor(m => m.GradaId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+            <!--end::Tab-->
+        </div>
+        <!--begin::Card body-->
+        <!--begin::Footer-->
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-xl-2"></div>
+                <div class="col-xl-7">
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-9">
+                            <button type="submit" class="btn btn-light-primary font-weight-bold">Ruaj</button>
+                            <a href="#" class="btn btn-clean font-weight-bold">Anulo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end::Footer-->
+    }
+</div>
+<!--end::Card-->
+
+
+
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+    $(function () {
+
+        $('#KompaniaId').change(function () {
+            fnKompaniaChange();
+
+        });
+        $('#DepartamentiId').change(function () {
+            fnDepartamentiChange();
+
+        });
+
+    });
+
+
+    function fnKompaniaChange() {
+        var KompaniaId = $('#KompaniaId').val();
+
+        if (KompaniaId > 0) {
+                $.ajax({
+                    data: { KompaniaId: KompaniaId },
+                    url: '@Url.Action("GetDepartments", "Departamenti")',
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function (results) {
+
+                        $("#DepartamentiId").html("");
+                        $("#DepartamentiId").prepend(new Option("Zgjedh", ""));
+                        $.each(results, function (i, result) {
+                            $("#DepartamentiId").append(
+                       $('<option></option>').val(result.value).html(result.text)
+                       );
+                        });
+                        $("#DepartamentiId").trigger("change");
+                    }
+                });
+            }
+            else {
+                $("#DepartamentiId").html("");
+                $("#DepartamentiId").prepend(new Option("Zgjedh", ""));
+                $("#DepartamentiId").trigger("change");
+            }
+
+        }
+
+        function fnDepartamentiChange() {
+            var DepartamentiId = $('#DepartamentiId').val();
+            var KompaniaId = $('#KompaniaId').val();
+
+
+            if (DepartamentiId > 0) {
+                $.ajax({
+                    data: { DepartamentiId: DepartamentiId,KompaniaId:KompaniaId },
+                    url: '@Url.Action("GetPozita", "Pozita")',
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function (results) {
+
+                        $("#PozitaId").html("");
+                        $("#PozitaId").prepend(new Option("Zgjedh", ""));
+                        $.each(results, function (i, result) {
+                            $("#PozitaId").append(
+                       $('<option></option>').val(result.value).html(result.text)
+                       );
+                        });
+                        $("#PozitaId").trigger("change");
+                    }
+                });
+            }
+            else {
+                $("#PozitaId").html("");
+                $("#PozitaId").prepend(new Option("Zgjedh", ""));
+                $("#PozitaId").trigger("change");
+            }
+
+            }
+
+    </script>
+}

@@ -1,0 +1,128 @@
+﻿@model RaportViewModel
+@{
+    ViewData["Title"] = "Shfleto raportet";
+
+}
+
+<div class="card card-custom gutter-b">
+    <div class="card-header flex-wrap py-3">
+        <div class="card-title">
+            <h3 class="card-label">
+                Zgjedh raportin
+            </h3>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <label class="required">Raporti:</label>
+                        <select asp-for="RaportiId" asp-items="ViewBag.RaportiId" class="form-control init-select2" onchange="raportichanged()">
+                            <option value="">Zgjedh</option>
+                        </select>
+                        <span asp-validation-for="RaportiId" class="text-danger"></span>
+                        <span class="form-text text-muted">Zgjedhni raportin për gjenerim</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="load-fields">
+
+        </div>
+    </div>
+</div>
+
+<div id="load-result">
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script type="text/javascript">
+        var raportichanged = function () {
+            var RaportiId = $("#RaportiId").val();
+            var obj = { raportid: RaportiId };
+
+            showLoading();
+
+            $.ajax({
+                url: "@Url.Action("LoadFields", "Raport")",
+                cache: false,
+                type: "POST",
+                dataType: "html",
+                data: obj,
+                success: function (rs) {
+                    hideLoading();
+                    $("#load-fields").html(rs);
+                },
+                error: function (jqXHR, error, errorThrown) {
+                    if (jqXHR.status && jqXHR.status == 400) {
+                        console.log(jqXHR.responseText);
+                    } else {
+                        hideLoading();
+                        console.log("Something went wrong");
+                    }
+                }
+            });
+        }
+
+        var shtyp = function () {
+            var RaportiId = $("#RaportiId").val();
+            var KompaniaId = $("#KompaniaId").val();
+            var PunetoriId = $("#PunetoriId").val();
+            var GradaId = $("#GradaId").val();
+            var BankaId = $("#BankaId").val();
+            var Muaji = $("#Muaji").val();
+            var Viti = $("#Viti").val();
+
+            var obj = { RaportiId: RaportiId, KompaniaId: KompaniaId, PunetoriId: PunetoriId, GradaId: GradaId, BankaId: BankaId, Muaji: Muaji, Vit: Viti };
+
+            if (RaportiId == null || RaportiId == "" || RaportiId == "undefined") {
+                swal("Vëmendje", "Ju lutem zgjedhni raportin të cilin dëshironi të shfaqni", "warning");
+
+                return;
+            }
+
+            showLoading();
+
+            $.ajax({
+                url: "@Url.Action("GenerateReport", "Raport")",
+                cache: false,
+                type: "POST",
+                dataType: "html",
+                data: obj,
+                success: function (rs) {
+                    hideLoading();
+                    $("#load-result").html(rs);
+                },
+                error: function (jqXHR, error, errorThrown) {
+                    if (jqXHR.status && jqXHR.status == 400) {
+                        console.log(jqXHR.responseText);
+                    } else {
+                        hideLoading();
+                        console.log("Something went wrong");
+                    }
+                }
+            });
+        }
+
+
+        function showLoading() {
+            $('#modalLoading').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            $("#modalLoading").modal('show');
+        }
+
+        //per me hjek loading barrin
+        function hideLoading() {
+            setTimeout(
+                function () {
+                    $("#modalLoading").modal('hide');
+                }, 1000);
+        }
+    </script>
+}

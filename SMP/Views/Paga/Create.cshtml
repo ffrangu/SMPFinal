@@ -1,0 +1,63 @@
+﻿@model PagaCreateViewModel
+@{
+    ViewData["Title"] = "Gjenerimi i pagave për punëtorët";
+}
+
+
+<div class="card card-custom gutter-b example example-compact">
+    <div class="card-header">
+        <h3 class="card-title">Gjenerimi i pagave për punëtorët</h3>
+    </div>
+    <div class="card-body">
+        <!--begin::Form-->
+        <form class="form" method="post">
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <label>Zgjedh kompanine per ekzekutim:</label>
+                    <select asp-for="KompaniaId" asp-items="ViewBag.KompaniaId" class="form-control init-select2">
+                        <option value="">Zgjedh kompanine</option>
+                    </select>
+                    <span asp-validation-for="KompaniaId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-6">
+                    <label>Viti:</label>
+                    <select asp-for="Viti" asp-items="ViewBag.Viti" class="form-control init-select2">
+                    </select>
+                    <span class="form-text text-muted">Viti për ekzekutim</span>
+                </div>
+                <div class="col-lg-6">
+                    <label>Muaji:</label>
+                    <select asp-for="Muaji" asp-items="ViewBag.Muaji" class="form-control init-select2">
+                    </select>
+                    <span class="form-text text-muted">Zgjedhni muajin per ekzekutim</span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-12">
+                    <label>Përshkrimi:</label>
+                    <textarea asp-for="Pershkrimi" class="form-control" rows="3"></textarea>
+                    <span class="form-text text-muted">Shënoni një përshkrim rreth ekzekutimit të pagave</span>
+                    <span asp-validation-for="Pershkrimi" class="text-danger"></span>
+
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <button type="submit" class="btn btn-primary mr-2">Ekzekuto</button>
+                        <button type="reset" class="btn btn-secondary">Anulo</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--end::Form-->
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,61 @@
+﻿@model List<AllPagat>
+
+@{
+    ViewData["Title"] = "Listimi i pagave në detaje";
+}
+
+
+<div class="card card-custom gutter-b">
+    <div class="card-header flex-wrap py-3">
+        <div class="card-title">
+            <h3 class="card-label">
+                Listimi i pagave në detaje
+            </h3>
+        </div>
+    </div>
+    <div class="card-body table-responsive">
+        <table class="table table-hover table-separate table-head-custom" id="data-table-nosort">
+            <thead>
+                <tr>
+                    <th>Punëtori</th>
+                    <th>Kompania</th>
+                    <th>Pozita</th>
+                    <th>Grada</th>
+                    <th>Viti</th>
+                    <th>Bruto</th>
+                    <th>Kontributi</th>
+                    <th>Paga pa tatimuar</th>
+                    <th>Tatimi</th>
+                    <th>Paga neto</th>
+                    <th>Bonuse</th>
+                    <th>Paga totale</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.Punetori</td>
+                    <td>@item.Kompania</td>
+                    <td>@item.Pozita</td>
+                    <td>@item.Grada</td>
+                    <td>@item.Viti</td>
+                    <td>@item.Bruto</td>
+                    <td>@item.Kontributi</td>
+                    <td>@item.PagaPaTatimuar </td>
+                    <td>@item.Tatimi</td>
+                    <td>@item.PagaNeto</td>
+                    <td>@item.Bonuse</td>
+                    <td>@item.PagaFinale</td>
+                    <td>
+                        <a href="@Url.Action("Details",new {id = item.Id })" class="btn btn-icon btn-outline-primary btn-xs" title="Details">
+                            <i class="flaticon2-list-1"></i>
+                        </a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
