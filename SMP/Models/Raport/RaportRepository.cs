@@ -211,7 +211,6 @@ namespace SMP.Models.Raport
 
             }
 
-
             return payslip;
         }
     }

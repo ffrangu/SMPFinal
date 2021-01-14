@@ -63,6 +63,27 @@
                 </div>
             </div>
         }
+        else
+        {
+    <div class="form-group row">
+        <div class="col-md-3">
+            <label>Muaji:</label>
+            <select asp-for="Muaji" asp-items="ViewBag.Muaji" class="form-control init-select2">
+                <option value="">Zgjedh</option>
+            </select>
+            <span asp-validation-for="Muaji" class="text-danger"></span>
+            <span class="form-text text-muted">Zgjedhni muajin</span>
+        </div>
+        <div class="col-md-3">
+            <label>Viti:</label>
+            <select asp-for="Viti" asp-items="ViewBag.Viti" class="form-control init-select2">
+                <option value="">Zgjedh</option>
+            </select>
+            <span asp-validation-for="Viti" class="text-danger"></span>
+            <span class="form-text text-muted">Zgjedhni vitin</span>
+        </div>
+    </div>
+        }
     </div>
 }
 else if (raportid == (int)SMP.Helpers.Raportet.Punetoret)
@@ -109,58 +130,82 @@ else if (raportid == (int)SMP.Helpers.Raportet.Punetoret)
 else if(raportid == (int)SMP.Helpers.Raportet.Payslip)
 {
 <div class="col-md-12">
-    <div class="form-group row">
-        <div class="col-md-6">
-            <label>Kompania:</label>
-            <select asp-for="KompaniaId" asp-items="ViewBag.KompaniaId" class="form-control init-select2">
-                <option value="">Zgjedh</option>
-            </select>
-            <span asp-validation-for="KompaniaId" class="text-danger"></span>
-            <span class="form-text text-muted">Zgjedhni kompaninë</span>
+    @if (!User.IsInRole("User"))
+    {
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label>Kompania:</label>
+                <select asp-for="KompaniaId" asp-items="ViewBag.KompaniaId" class="form-control init-select2">
+                    <option value="">Zgjedh</option>
+                </select>
+                <span asp-validation-for="KompaniaId" class="text-danger"></span>
+                <span class="form-text text-muted">Zgjedhni kompaninë</span>
+            </div>
+            <div class="col-md-6">
+                <label>Punëtori:</label>
+                <select asp-for="PunetoriId" asp-items="ViewBag.PunetoriId" class="form-control init-select2">
+                    <option value="">Zgjedh</option>
+                </select>
+                <span asp-validation-for="PunetoriId" class="text-danger"></span>
+                <span class="form-text text-muted">Zgjedhni punëtorin</span>
+            </div>
         </div>
-        <div class="col-md-6">
-            <label>Punëtori:</label>
-            <select asp-for="PunetoriId" asp-items="ViewBag.PunetoriId" class="form-control init-select2">
-                <option value="">Zgjedh</option>
-            </select>
-            <span asp-validation-for="PunetoriId" class="text-danger"></span>
-            <span class="form-text text-muted">Zgjedhni punëtorin</span>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label>Grada:</label>
+                <select asp-for="GradaId" asp-items="ViewBag.GradaId" class="form-control init-select2">
+                    <option value="">Zgjedh</option>
+                </select>
+                <span asp-validation-for="GradaId" class="text-danger"></span>
+                <span class="form-text text-muted">Zgjedhni gradën</span>
+            </div>
+            <div class="col-md-3">
+                <label>Banka:</label>
+                <select asp-for="BankaId" asp-items="ViewBag.BankaId" class="form-control init-select2">
+                    <option value="">Zgjedh</option>
+                </select>
+                <span asp-validation-for="BankaId" class="text-danger"></span>
+                <span class="form-text text-muted">Zgjedhni bankën</span>
+            </div>
+            <div class="col-md-3">
+                <label>Muaji:</label>
+                <select asp-for="Muaji" asp-items="ViewBag.Muaji" class="form-control init-select2">
+                    <option value="">Zgjedh</option>
+                </select>
+                <span asp-validation-for="Muaji" class="text-danger"></span>
+                <span class="form-text text-muted">Zgjedhni muajin</span>
+            </div>
+            <div class="col-md-3">
+                <label>Viti:</label>
+                <select asp-for="Viti" asp-items="ViewBag.Viti" class="form-control init-select2">
+                    <option value="">Zgjedh</option>
+                </select>
+                <span asp-validation-for="Viti" class="text-danger"></span>
+                <span class="form-text text-muted">Zgjedhni vitin</span>
+            </div>
         </div>
+    }
+    else
+    {
+<div class="form-group row">
+    <div class="col-md-3">
+        <label>Muaji:</label>
+        <select asp-for="Muaji" asp-items="ViewBag.Muaji" class="form-control init-select2">
+            <option value="">Zgjedh</option>
+        </select>
+        <span asp-validation-for="Muaji" class="text-danger"></span>
+        <span class="form-text text-muted">Zgjedhni muajin</span>
     </div>
-    <div class="form-group row">
-        <div class="col-md-3">
-            <label>Grada:</label>
-            <select asp-for="GradaId" asp-items="ViewBag.GradaId" class="form-control init-select2">
-                <option value="">Zgjedh</option>
-            </select>
-            <span asp-validation-for="GradaId" class="text-danger"></span>
-            <span class="form-text text-muted">Zgjedhni gradën</span>
-        </div>
-        <div class="col-md-3">
-            <label>Banka:</label>
-            <select asp-for="BankaId" asp-items="ViewBag.BankaId" class="form-control init-select2">
-                <option value="">Zgjedh</option>
-            </select>
-            <span asp-validation-for="BankaId" class="text-danger"></span>
-            <span class="form-text text-muted">Zgjedhni bankën</span>
-        </div>
-        <div class="col-md-3">
-            <label>Muaji:</label>
-            <select asp-for="Muaji" asp-items="ViewBag.Muaji" class="form-control init-select2">
-                <option value="">Zgjedh</option>
-            </select>
-            <span asp-validation-for="Muaji" class="text-danger"></span>
-            <span class="form-text text-muted">Zgjedhni muajin</span>
-        </div>
-        <div class="col-md-3">
-            <label>Viti:</label>
-            <select asp-for="Viti" asp-items="ViewBag.Viti" class="form-control init-select2">
-                <option value="">Zgjedh</option>
-            </select>
-            <span asp-validation-for="Viti" class="text-danger"></span>
-            <span class="form-text text-muted">Zgjedhni vitin</span>
-        </div>
+    <div class="col-md-3">
+        <label>Viti:</label>
+        <select asp-for="Viti" asp-items="ViewBag.Viti" class="form-control init-select2">
+            <option value="">Zgjedh</option>
+        </select>
+        <span asp-validation-for="Viti" class="text-danger"></span>
+        <span class="form-text text-muted">Zgjedhni vitin</span>
     </div>
+</div>
+    }
 </div>
 }
 else

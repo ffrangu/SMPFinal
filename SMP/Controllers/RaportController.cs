@@ -138,6 +138,11 @@ namespace SMP.Controllers
             {
                 ViewBag.RaportiId = model.RaportiId;
                 var pagat = await raportRepository.Payslip(model.PunetoriId, model.KompaniaId,model.Viti,model.Muaji, model.BankaId, model.GradaId);
+                if(User.IsInRole("User"))
+                {
+                    var punetori = await punetoriRepository.GetPunetoriByUserId(user.UserId);
+                    pagat = pagat.Where(q => q.PunetoriId == punetori.Id).ToList();
+                }
                 returmodel.paySlip = pagat;
                 Models.SessionExtensions.Set(session, "Payslip", pagat);
 
